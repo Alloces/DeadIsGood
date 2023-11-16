@@ -120,4 +120,5 @@ func _purple_ability() -> void:
 
 
 func _on_area_2d_area_entered(area: Area2D):
+	_area.set_collision_mask(15)
 	emit_signal("died", area.get_parent().name)
