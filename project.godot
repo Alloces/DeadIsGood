@@ -14,3 +14,11 @@ config/name="Death Is Good"
 run/main_scene="res://MainMenu.tscn"
 config/features=PackedStringArray("4.1", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+AudioManager="*res://audio_manager.gd"
+
+[display]
+
+window/stretch/mode="viewport"
