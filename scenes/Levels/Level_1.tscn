@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://ni2chbecqsvi"]
+[gd_scene load_steps=6 format=3 uid="uid://ni2chbecqsvi"]
 
 [ext_resource type="Texture2D" uid="uid://db3s5iecejcda" path="res://assets/Scribble/spritesheet_default.png" id="1_4xlef"]
 [ext_resource type="PackedScene" uid="uid://ceex3gangy2cq" path="res://scenes/Player/Player.tscn" id="2_2uk15"]
+[ext_resource type="PackedScene" uid="uid://4p7phwurvws8" path="res://scenes/NPC/NPC.tscn" id="3_22bpr"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xuirc"]
 texture = ExtResource("1_4xlef")
@@ -386,8 +387,10 @@ sources/0 = SubResource("TileSetAtlasSource_xuirc")
 scale = Vector2(1, 0.966707)
 tile_set = SubResource("TileSet_2n47c")
 format = 2
-layer_0/tile_data = PackedInt32Array(589824, 65536, 10, 589825, 65536, 10, 589826, 65536, 10, 589827, 65536, 10, 589828, 65536, 10, 589829, 65536, 10, 589830, 65536, 10, 589831, 65536, 10, 524293, 65536, 10, 458757, 65536, 10, 393221, 65536, 10)
+layer_0/tile_data = PackedInt32Array(589824, 65536, 10, 589825, 65536, 10, 589826, 65536, 10, 589827, 65536, 10, 589828, 65536, 10, 589829, 65536, 10, 589830, 65536, 10, 589831, 65536, 10, 524293, 65536, 10, 458757, 65536, 10, 393221, 65536, 10, 655359, 65536, 10, 655358, 65536, 10, 655357, 65536, 10, 655356, 65536, 10, 655355, 65536, 10, 655354, 65536, 10, 655353, 65536, 10, 589832, 65536, 10, 589833, 65536, 10, 589834, 65536, 10, 589835, 65536, 10)
+
+[node name="NPC" parent="." instance=ExtResource("3_22bpr")]
+position = Vector2(-301, 485)
 
 [node name="Player" parent="." instance=ExtResource("2_2uk15")]
-position = Vector2(208, 337)
-type = 1
+position = Vector2(139, 420)
