@@ -383,9 +383,11 @@ sources/0 = SubResource("TileSetAtlasSource_xuirc")
 [node name="Level_1" type="Node2D"]
 
 [node name="TileMap" type="TileMap" parent="."]
+scale = Vector2(1, 0.966707)
 tile_set = SubResource("TileSet_2n47c")
 format = 2
-layer_0/tile_data = PackedInt32Array(589824, 65536, 10, 589825, 65536, 10, 589826, 65536, 10, 589827, 65536, 10, 589828, 65536, 10, 589829, 65536, 10, 589830, 65536, 10, 589831, 65536, 10)
+layer_0/tile_data = PackedInt32Array(589824, 65536, 10, 589825, 65536, 10, 589826, 65536, 10, 589827, 65536, 10, 589828, 65536, 10, 589829, 65536, 10, 589830, 65536, 10, 589831, 65536, 10, 524293, 65536, 10, 458757, 65536, 10, 393221, 65536, 10)
 
 [node name="Player" parent="." instance=ExtResource("2_2uk15")]
 position = Vector2(208, 337)
+type = 1
