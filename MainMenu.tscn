@@ -27,7 +27,7 @@ func _on_start_btn_pressed():
 func _on_exit_btn_pressed():
 	get_tree().quit()
 
-func _process(delta):
+func _process(_delta):
 	var w = get_viewport().size
 	$ParallaxBackground.scroll_offset=(get_global_mouse_position() - Vector2(w / 2)) * -0.5
 
@@ -63,6 +63,7 @@ size_flags_horizontal = 3
 script = SubResource("GDScript_dq42c")
 
 [node name="StartButton" type="TextureButton" parent="."]
+layout_mode = 0
 offset_left = 504.0
 offset_top = 461.0
 offset_right = 680.0
@@ -71,6 +72,7 @@ texture_normal = ExtResource("9_ttc4i")
 texture_hover = ExtResource("2_u3psv")
 
 [node name="ExitButton" type="TextureButton" parent="."]
+layout_mode = 0
 offset_left = 45.0
 offset_top = 454.0
 offset_right = 221.0
@@ -164,6 +166,7 @@ size_flags_vertical = 3
 texture = SubResource("GradientTexture1D_inv0t")
 
 [node name="MuteButton" type="TextureButton" parent="."]
+layout_mode = 0
 offset_left = 980.0
 offset_right = 1156.0
 offset_bottom = 174.0

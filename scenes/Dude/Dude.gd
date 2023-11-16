@@ -55,6 +55,9 @@ func _ready() -> void:
 
 func _change_is_player_state() -> void:
 	_camera.enabled = is_player
+	_area.call_deferred("set_monitoring", is_player)
+	_area.call_deferred("set_monitorable", !is_player)
+	
 	if is_player:
 		_area.connect("area_entered", _on_area_2d_area_entered)
 	elif _area.is_connected("area_entered", _on_area_2d_area_entered):
@@ -120,5 +123,4 @@ func _purple_ability() -> void:
 
 
 func _on_area_2d_area_entered(area: Area2D):
-	_area.set_collision_mask(15)
 	emit_signal("died", area.get_parent().name)
