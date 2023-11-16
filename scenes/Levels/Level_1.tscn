@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://ni2chbecqsvi"]
+[gd_scene load_steps=5 format=3 uid="uid://ni2chbecqsvi"]
 
 [ext_resource type="Texture2D" uid="uid://db3s5iecejcda" path="res://assets/Scribble/spritesheet_default.png" id="1_4xlef"]
+[ext_resource type="PackedScene" uid="uid://ceex3gangy2cq" path="res://scenes/Player/Player.tscn" id="2_2uk15"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xuirc"]
 texture = ExtResource("1_4xlef")
@@ -158,9 +159,13 @@ texture_region_size = Vector2i(64, 64)
 8:5/0 = 0
 8:5/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 8:5/0/physics_layer_0/angular_velocity = 0.0
+9:5/next_alternative_id = 2
 9:5/0 = 0
 9:5/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 9:5/0/physics_layer_0/angular_velocity = 0.0
+9:5/1 = 1
+9:5/1/physics_layer_0/linear_velocity = Vector2(0, 0)
+9:5/1/physics_layer_0/angular_velocity = 0.0
 10:5/0 = 0
 10:5/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 10:5/0/physics_layer_0/angular_velocity = 0.0
@@ -381,3 +386,6 @@ sources/0 = SubResource("TileSetAtlasSource_xuirc")
 tile_set = SubResource("TileSet_2n47c")
 format = 2
 layer_0/tile_data = PackedInt32Array(589824, 65536, 10, 589825, 65536, 10, 589826, 65536, 10, 589827, 65536, 10, 589828, 65536, 10, 589829, 65536, 10, 589830, 65536, 10, 589831, 65536, 10)
+
+[node name="Player" parent="." instance=ExtResource("2_2uk15")]
+position = Vector2(208, 337)

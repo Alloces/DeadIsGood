@@ -1,4 +1,4 @@
-extends CharacterBody2D
+extends Node2D
 
 enum Types {
 	Red,
@@ -20,4 +20,6 @@ var TypeRects: Dictionary = {
 	get:
 		return type
 	set(new_type):
+		# TODO: check if type in dict
+		type = new_type
 		sprite.set_region_rect(TypeRects[type])
