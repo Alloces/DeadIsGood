@@ -1,20 +1,35 @@
-[gd_scene load_steps=4 format=3 uid="uid://06ojoc0m3jr3"]
+[gd_scene load_steps=5 format=3 uid="uid://chm67gi5crs17"]
 
-[ext_resource type="Script" path="res://scenes/Dude/Dude.gd" id="1_dtsdw"]
-[ext_resource type="Texture2D" uid="uid://db3s5iecejcda" path="res://assets/Scribble/spritesheet_default.png" id="1_xj4us"]
+[ext_resource type="Script" path="res://scenes/Dude/Dude.gd" id="1_6nkmb"]
+[ext_resource type="Texture2D" uid="uid://db3s5iecejcda" path="res://assets/Scribble/spritesheet_default.png" id="1_vc6mv"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_e1in6"]
-radius = 19.57
-height = 63.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cywdl"]
+radius = 23.0
+height = 66.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mv6ge"]
+radius = 18.0
+height = 58.0
 
 [node name="Dude" type="CharacterBody2D"]
-script = ExtResource("1_dtsdw")
+collision_mask = 2
+script = ExtResource("1_6nkmb")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -1)
-shape = SubResource("CapsuleShape2D_e1in6")
+[node name="LevelCollision" type="CollisionShape2D" parent="."]
+position = Vector2(0, -2)
+shape = SubResource("CapsuleShape2D_cywdl")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_xj4us")
+texture = ExtResource("1_vc6mv")
 region_enabled = true
 region_rect = Rect2(576, 256, 64, 64)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 4
+
+[node name="DudesCollision" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -1)
+shape = SubResource("CapsuleShape2D_mv6ge")

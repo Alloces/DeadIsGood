@@ -1,4 +1,7 @@
 extends CharacterBody2D
+class_name Dude
+
+signal died(killer_name: String)
 
 enum Types {
 	Red,
@@ -7,6 +10,34 @@ enum Types {
 	Purple,
 }
 
+const SPEED = 300.0
+const JUMP_VELOCITY = -400.0
+
+@onready var _sprite: Sprite2D = $Sprite2D
+@onready var _camera: Camera2D = $Camera2D
+@onready var _area: Area2D = $Area2D
+
+@export var is_player: bool = false :
+	get:
+		return is_player
+	set(val):
+		is_player = val
+		if _camera == null:
+			return
+		
+		_change_is_player_state()
+
+@export var type: Types = Types.Red :
+	get:
+		return type
+	set(new_type):
+		type = new_type
+		if _sprite == null:
+			return
+		
+		# TODO: check if type in dict
+		_sprite.set_region_rect(TypeRects[type])
+
 var TypeRects: Dictionary = {
 	Types.Red: 		Rect2(576, 320, 64, 64),
 	Types.Green: 	Rect2(576, 448, 64, 64),
@@ -14,10 +45,79 @@ var TypeRects: Dictionary = {
 	Types.Purple: 	Rect2(576, 384, 64, 64),
 }
 
-@onready var sprite: Sprite2D = $Sprite2D
+var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
-@onready var type: Types = Types.Red :
-	get:
-		return type
-	set(new_type):
-		sprite.set_region_rect(TypeRects[type])
+
+func _ready() -> void:
+	_change_is_player_state()
+	_sprite.set_region_rect(TypeRects[type])
+
+
+func _change_is_player_state() -> void:
+	_camera.enabled = is_player
+	if is_player:
+		_area.connect("area_entered", _on_area_2d_area_entered)
+	elif _area.is_connected("area_entered", _on_area_2d_area_entered):
+		_area.disconnect("area_entered", _on_area_2d_area_entered)
+
+
+func _physics_process(delta: float) -> void:
+	if not is_on_floor():
+		velocity.y += gravity * delta
+	
+	if is_player:
+		_parse_input()
+	else:
+		_parse_npc_behavior()
+	
+	move_and_slide()
+
+
+func _parse_input() -> void:
+	if Input.is_action_just_pressed("ui_accept"):
+		use_ability()
+	
+	move(Input.get_axis("ui_left", "ui_right"))
+
+
+func _parse_npc_behavior() -> void:
+	pass
+
+
+func move(direction: float) -> void:
+	if direction:
+		velocity.x = direction * SPEED
+	else:
+		velocity.x = move_toward(velocity.x, 0, SPEED)
+
+
+func use_ability() -> void:
+	match type:
+		Types.Red:
+			_red_ability()
+		Types.Green:
+			_green_ability()
+		Types.Yellow:
+			_yellow_ability()
+		Types.Purple:
+			_purple_ability()
+
+func _red_ability() -> void:
+	print("red ability")
+
+
+func _green_ability() -> void:
+	if is_on_floor():
+		velocity.y = JUMP_VELOCITY
+
+
+func _yellow_ability() -> void:
+	print("yellow ability")
+
+
+func _purple_ability() -> void:
+	print("purple ability")
+
+
+func _on_area_2d_area_entered(area: Area2D):
+	emit_signal("died", area.get_parent().name)

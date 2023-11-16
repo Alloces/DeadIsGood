@@ -1,6 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://ni2chbecqsvi"]
+[gd_scene load_steps=6 format=3 uid="uid://ni2chbecqsvi"]
 
 [ext_resource type="Texture2D" uid="uid://db3s5iecejcda" path="res://assets/Scribble/spritesheet_default.png" id="1_4xlef"]
+[ext_resource type="Script" path="res://scenes/Levels/Level.gd" id="1_eypf1"]
+[ext_resource type="PackedScene" uid="uid://chm67gi5crs17" path="res://scenes/Dude/Dude.tscn" id="2_3brh7"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xuirc"]
 texture = ExtResource("1_4xlef")
@@ -158,9 +160,13 @@ texture_region_size = Vector2i(64, 64)
 8:5/0 = 0
 8:5/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 8:5/0/physics_layer_0/angular_velocity = 0.0
+9:5/next_alternative_id = 2
 9:5/0 = 0
 9:5/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 9:5/0/physics_layer_0/angular_velocity = 0.0
+9:5/1 = 1
+9:5/1/physics_layer_0/linear_velocity = Vector2(0, 0)
+9:5/1/physics_layer_0/angular_velocity = 0.0
 10:5/0 = 0
 10:5/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 10:5/0/physics_layer_0/angular_velocity = 0.0
@@ -372,12 +378,24 @@ texture_region_size = Vector2i(64, 64)
 
 [sub_resource type="TileSet" id="TileSet_2n47c"]
 tile_size = Vector2i(64, 64)
-physics_layer_0/collision_layer = 1
+physics_layer_0/collision_layer = 2
 sources/0 = SubResource("TileSetAtlasSource_xuirc")
 
-[node name="Level_1" type="Node2D"]
+[node name="Level_1" type="Node2D" node_paths=PackedStringArray("_player")]
+script = ExtResource("1_eypf1")
+_player = NodePath("Player")
 
 [node name="TileMap" type="TileMap" parent="."]
+scale = Vector2(1, 0.966707)
 tile_set = SubResource("TileSet_2n47c")
 format = 2
-layer_0/tile_data = PackedInt32Array(589824, 65536, 10, 589825, 65536, 10, 589826, 65536, 10, 589827, 65536, 10, 589828, 65536, 10, 589829, 65536, 10, 589830, 65536, 10, 589831, 65536, 10)
+layer_0/tile_data = PackedInt32Array(589824, 65536, 10, 589825, 65536, 10, 589826, 65536, 10, 589827, 65536, 10, 589828, 65536, 10, 589829, 65536, 10, 589830, 65536, 10, 589831, 65536, 10, 524293, 65536, 10, 458757, 65536, 10, 393221, 65536, 10, 655359, 65536, 10, 655358, 65536, 10, 655357, 65536, 10, 655356, 65536, 10, 655355, 65536, 10, 655354, 65536, 10, 655353, 65536, 10, 589832, 65536, 10, 589833, 65536, 10, 589834, 65536, 10, 589835, 65536, 10)
+
+[node name="Player" parent="." instance=ExtResource("2_3brh7")]
+position = Vector2(184, 391)
+is_player = true
+type = 1
+
+[node name="YellowDude" parent="." instance=ExtResource("2_3brh7")]
+position = Vector2(-334, 467)
+type = 2
