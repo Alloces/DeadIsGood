@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cbc835t7v1l3k"
+path="res://.godot/imported/Fall and Put Down.wav-e0cde961bae1784be81cc39bd470f100.sample"
+
+[deps]
+
+source_file="res://assets/sfx/Fall and Put Down.wav"
+dest_files=["res://.godot/imported/Fall and Put Down.wav-e0cde961bae1784be81cc39bd470f100.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

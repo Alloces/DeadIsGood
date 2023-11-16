@@ -1,25 +1,184 @@
-[gd_scene load_steps=2 format=3 uid="uid://ctj2o8mtr46c8"]
+[gd_scene load_steps=19 format=3 uid="uid://ctj2o8mtr46c8"]
+
+[ext_resource type="Texture2D" uid="uid://cbaq52d38mblr" path="res://assets/sprites/ui/tile_column.png" id="1_bup2w"]
+[ext_resource type="Texture2D" uid="uid://b8146vndw4yk5" path="res://assets/sprites/ui/tile_crate.png" id="2_swab2"]
+[ext_resource type="Texture2D" uid="uid://iy463hxxxpgv" path="res://assets/sprites/ui/ui_button_hover.png" id="2_u3psv"]
+[ext_resource type="Texture2D" uid="uid://ct462upcvanrv" path="res://assets/sprites/ui/ui_button copy_hover.png" id="3_2crf6"]
+[ext_resource type="Texture2D" uid="uid://digwxn5pcosg8" path="res://assets/sprites/ui/character_roundGreen.png" id="3_uils3"]
+[ext_resource type="Texture2D" uid="uid://bswiqvegu7ily" path="res://assets/sprites/ui/character_roundRed.png" id="4_80xiw"]
+[ext_resource type="Texture2D" uid="uid://nwryub0e1ve4" path="res://assets/sprites/ui/character_roundPurple.png" id="5_xdyx0"]
+[ext_resource type="Texture2D" uid="uid://ba1ua8pwasr0f" path="res://assets/sprites/ui/character_roundYellow.png" id="6_e0kk4"]
+[ext_resource type="Texture2D" uid="uid://dnhiv3it12lw7" path="res://assets/sprites/ui/item_sword copy.png" id="7_ubpup"]
+[ext_resource type="Texture2D" uid="uid://cw31omnevqx0c" path="res://assets/sprites/ui/ui_button copy.png" id="8_nnwvx"]
+[ext_resource type="Texture2D" uid="uid://c30j7x4scgbk1" path="res://assets/sprites/ui/ui_button.png" id="9_ttc4i"]
+[ext_resource type="Texture2D" uid="uid://dw2bxbr5gfcmj" path="res://assets/sprites/ui/muted.png" id="12_dr56u"]
+[ext_resource type="Texture2D" uid="uid://ut3dpc8r0mx5" path="res://assets/sprites/ui/music.png" id="12_uwkrt"]
+[ext_resource type="Texture2D" uid="uid://dejtailmkyryx" path="res://assets/sprites/ui/muted_pressed.png" id="13_l6hhc"]
+[ext_resource type="Texture2D" uid="uid://bs386hfd3dqr0" path="res://assets/sprites/ui/music_pressed.png" id="13_l7wbv"]
 
 [sub_resource type="GDScript" id="GDScript_dq42c"]
-script/source = "extends Node2D
+script/source = "extends Control
 
 var first_level: String = \"res://scenes/Levels/Level_1.tscn\"
 
 func _on_start_btn_pressed():
 	get_tree().change_scene_to_file(first_level)
+	
+func _on_exit_btn_pressed():
+	get_tree().quit()
+
+func _process(delta):
+	var w = get_viewport().size
+	$ParallaxBackground.scroll_offset=(get_global_mouse_position() - Vector2(w / 2)) * -0.5
+
+func _on_music_button_pressed():
+	AudioManager.stop()
+	$MuteButton.disabled = false
+	$MuteButton.visible = true
+	$MusicButton.disabled = true
+	$MusicButton.visible = false
+	
+func _on_mute_button_pressed():
+	AudioManager.play()
+	$MuteButton.disabled = true
+	$MuteButton.visible = false
+	$MusicButton.disabled = false
+	$MusicButton.visible = true
 "
 
-[node name="MainMenu" type="Node2D"]
+[sub_resource type="Gradient" id="Gradient_nah42"]
+colors = PackedColorArray(0.866667, 0.866667, 0.866667, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_inv0t"]
+gradient = SubResource("Gradient_nah42")
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
 script = SubResource("GDScript_dq42c")
 
-[node name="GridContainer" type="GridContainer" parent="."]
-offset_right = 1152.0
-offset_bottom = 648.0
+[node name="StartButton" type="TextureButton" parent="."]
+offset_left = 504.0
+offset_top = 461.0
+offset_right = 680.0
+offset_bottom = 633.0
+texture_normal = ExtResource("9_ttc4i")
+texture_hover = ExtResource("2_u3psv")
 
-[node name="StartBtn" type="Button" parent="GridContainer"]
-layout_mode = 2
+[node name="ExitButton" type="TextureButton" parent="."]
+offset_left = 45.0
+offset_top = 454.0
+offset_right = 221.0
+offset_bottom = 628.0
+texture_normal = ExtResource("8_nnwvx")
+texture_hover = ExtResource("3_2crf6")
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.4, 0.4)
+
+[node name="TileColumn" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2(345, 303)
+texture = ExtResource("1_bup2w")
+
+[node name="TileColumn2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2(44, 725)
+rotation = 2.42819
+texture = ExtResource("1_bup2w")
+
+[node name="TileCrate" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2(762, 284)
+texture = ExtResource("2_swab2")
+
+[node name="TileCrate4" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2(1110, 366)
+rotation = -1.40281
+scale = Vector2(1.09156, 1.09156)
+texture = ExtResource("2_swab2")
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.7, 0.7)
+
+[node name="CharacterRoundPurple2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
+position = Vector2(1095, 48)
+rotation = -1.02041
+scale = Vector2(0.588876, 0.588876)
+texture = ExtResource("5_xdyx0")
+
+[node name="CharacterRoundGreen" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
+position = Vector2(898, 176)
+texture = ExtResource("3_uils3")
+
+[node name="CharacterRoundRed" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
+position = Vector2(718, 427)
+texture = ExtResource("4_80xiw")
+
+[node name="TileCrate3" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
+position = Vector2(1158, 729)
+rotation = -1.40281
+scale = Vector2(0.519112, 0.519112)
+texture = ExtResource("2_swab2")
+
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.5, 0.5)
+
+[node name="CharacterRoundPurple" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3"]
+position = Vector2(214, 183)
+texture = ExtResource("5_xdyx0")
+
+[node name="CharacterRoundYellow" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3"]
+position = Vector2(139, 471)
+texture = ExtResource("6_e0kk4")
+
+[node name="ItemSwordCopy" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3"]
+position = Vector2(926, 222)
+texture = ExtResource("7_ubpup")
+
+[node name="TileCrate2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3"]
+position = Vector2(80, -53)
+rotation = -1.40281
+texture = ExtResource("2_swab2")
+
+[node name="CharacterRoundGreen2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3"]
+position = Vector2(650, 750)
+rotation = 2.03784
+texture = ExtResource("3_uils3")
+
+[node name="BackgroundColor" type="CanvasLayer" parent="."]
+layer = -101
+
+[node name="TextureRect" type="TextureRect" parent="BackgroundColor"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 3
-size_flags_vertical = 6
-text = "Start"
+size_flags_vertical = 3
+texture = SubResource("GradientTexture1D_inv0t")
 
-[connection signal="pressed" from="GridContainer/StartBtn" to="." method="_on_start_btn_pressed"]
+[node name="MuteButton" type="TextureButton" parent="."]
+offset_left = 980.0
+offset_right = 1156.0
+offset_bottom = 174.0
+texture_normal = ExtResource("12_dr56u")
+texture_hover = ExtResource("13_l6hhc")
+
+[node name="MusicButton" type="TextureButton" parent="."]
+layout_mode = 1
+offset_left = 980.0
+offset_right = 1156.0
+offset_bottom = 174.0
+texture_normal = ExtResource("12_uwkrt")
+texture_hover = ExtResource("13_l7wbv")
+
+[connection signal="pressed" from="StartButton" to="." method="_on_start_btn_pressed"]
+[connection signal="pressed" from="ExitButton" to="." method="_on_exit_btn_pressed"]
+[connection signal="pressed" from="MuteButton" to="." method="_on_mute_button_pressed"]
+[connection signal="pressed" from="MusicButton" to="." method="_on_music_button_pressed"]
