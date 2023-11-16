@@ -90,6 +90,8 @@ func _parse_npc_behavior() -> void:
 func move(direction: float) -> void:
 	if direction:
 		velocity.x = direction * SPEED
+		
+		_sprite.flip_h = direction < 0
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 

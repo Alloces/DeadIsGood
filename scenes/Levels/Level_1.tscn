@@ -399,3 +399,6 @@ type = 1
 [node name="YellowDude" parent="." instance=ExtResource("2_3brh7")]
 position = Vector2(-334, 467)
 type = 2
+
+[node name="RedDude" parent="." instance=ExtResource("2_3brh7")]
+position = Vector2(581, 504)
