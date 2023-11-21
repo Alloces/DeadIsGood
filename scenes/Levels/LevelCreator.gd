@@ -46,11 +46,15 @@ func set_block(x: int, y: int):
 		get_node(str(x, "-", y)).texture_normal = SPRITES[OBJECTS.SPACE]
 
 func load_level():
+	if !ResourceLoader.exists("user://level.tres"):
+		return
+		
 	var res: LevelResource = ResourceLoader.load("user://level.tres")
 	Level = res.data
 
 func _ready():
 	load_level()
+	pass
 
 	for x in GRID_SIZE[0]:
 		for y in GRID_SIZE[1]:

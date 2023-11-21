@@ -13,8 +13,11 @@ enum Types {
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
 
+const GROUP = "dude"
+
 @onready var _sprite: Sprite2D = $Sprite2D
 @onready var _camera: Camera2D = $Camera2D
+@onready var _purple_area: Area2D = $PurpleActionArea
 @onready var _area: Area2D = $Area2D
 
 @export var is_player: bool = false :
@@ -38,6 +41,9 @@ const JUMP_VELOCITY = -400.0
 		# TODO: check if type in dict
 		_sprite.set_region_rect(TypeRects[type])
 
+@export var tilemap: TileMap
+@export var block_atlas_coords: Vector2i = Vector2i(4, 7)
+
 var TypeRects: Dictionary = {
 	Types.Red: 		Rect2(576, 320, 64, 64),
 	Types.Green: 	Rect2(576, 448, 64, 64),
@@ -46,7 +52,9 @@ var TypeRects: Dictionary = {
 }
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+var _current_direction: float
 
+var _created_tiles: Array[Vector2i] = []
 
 func _ready() -> void:
 	_change_is_player_state()
@@ -107,6 +115,7 @@ func use_ability() -> void:
 		Types.Purple:
 			_purple_ability()
 
+
 func _red_ability() -> void:
 	print("red ability")
 
@@ -121,7 +130,23 @@ func _yellow_ability() -> void:
 
 
 func _purple_ability() -> void:
-	print("purple ability")
+	var cell: Vector2i = tilemap.local_to_map(position)
+	cell.y += 1
+	if tilemap.get_cell_atlas_coords(0, cell) != Vector2i(-1, -1):
+		cell.x += -1 if _sprite.is_flipped_h() else 1
+	
+	var atlas_coords: Vector2i = tilemap.get_cell_atlas_coords(0, cell)
+	if atlas_coords == Vector2i(-1, -1):
+		if _purple_area.has_overlapping_areas():
+			return
+		
+		tilemap.set_cell(0, cell, 0, block_atlas_coords)
+		_created_tiles.append(cell)
+		if _created_tiles.size() > 3:
+			tilemap.set_cell(0, _created_tiles.pop_front(), 0, Vector2i(-1, -1))
+		
+	elif atlas_coords == block_atlas_coords:
+		tilemap.set_cell(0, cell, 0, Vector2i(-1, -1))
 
 
 func _on_area_2d_area_entered(area: Area2D):
