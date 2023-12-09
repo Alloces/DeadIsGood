@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://chm67gi5crs17"]
+[gd_scene load_steps=7 format=3 uid="uid://chm67gi5crs17"]
 
 [ext_resource type="Script" path="res://scenes/Dude/Dude.gd" id="1_6nkmb"]
 [ext_resource type="Texture2D" uid="uid://db3s5iecejcda" path="res://assets/Scribble/spritesheet_default.png" id="1_vc6mv"]
@@ -12,6 +12,10 @@ radius = 18.0
 height = 58.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oqiyy"]
+size = Vector2(10.8, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3geuv"]
+size = Vector2(62, 61)
 
 [node name="Dude" type="CharacterBody2D" groups=["dude"]]
 collision_mask = 2
@@ -37,6 +41,7 @@ position = Vector2(0, -1)
 shape = SubResource("CapsuleShape2D_mv6ge")
 
 [node name="PurpleActionArea" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 collision_mask = 9
 
@@ -44,3 +49,27 @@ collision_mask = 9
 position = Vector2(0, 55)
 scale = Vector2(5, 2.5)
 shape = SubResource("RectangleShape2D_oqiyy")
+
+[node name="RedActionArea" type="Area2D" parent="."]
+position = Vector2(55, 0)
+collision_layer = 0
+collision_mask = 9
+
+[node name="RedActionCollision" type="CollisionShape2D" parent="RedActionArea"]
+scale = Vector2(5, 2.5)
+shape = SubResource("RectangleShape2D_oqiyy")
+
+[node name="BlockForRed" type="Node2D" parent="."]
+visible = false
+
+[node name="Sprite2D" type="Sprite2D" parent="BlockForRed"]
+position = Vector2(-1, -73)
+texture = ExtResource("1_vc6mv")
+region_enabled = true
+region_rect = Rect2(256, 448, 64, 64)
+
+[node name="Area2D" type="Area2D" parent="BlockForRed"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BlockForRed/Area2D"]
+position = Vector2(-1, -71.5)
+shape = SubResource("RectangleShape2D_3geuv")
