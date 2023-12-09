@@ -52,10 +52,7 @@ func load_level():
 	var res: LevelResource = ResourceLoader.load("user://level.tres")
 	Level = res.data
 
-func _ready():
-	load_level()
-	pass
-
+func setup_grid():
 	for x in GRID_SIZE[0]:
 		for y in GRID_SIZE[1]:
 			var btn := TextureButton.new()
@@ -72,6 +69,11 @@ func _ready():
 			Level[str(x, y)] = Level.get(str(x,y)) if Level.has(str(x,y)) else OBJECTS.SPACE
 
 			add_child(btn)
+
+func _ready():
+	load_level()
+	setup_grid()
+
 
 func _input(event):
 	if event is InputEventMouseButton:
