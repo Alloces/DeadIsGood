@@ -17,6 +17,13 @@ const GROUP = "dude"
 
 @onready var _sprite: Sprite2D = $Sprite2D
 @onready var _camera: Camera2D = $Camera2D
+@onready var _teleport_camera: Camera2D = $TeleportCamera
+@onready var _teleport_collsion_checks := {
+	Vector2(-128, 0): $Node2D/Left,
+	Vector2(128, 0): $Node2D/Right,
+	Vector2(0, -128): $Node2D/Up,
+	Vector2(0, 128): $Node2D/Down,
+}
 @onready var _purple_area: Area2D = $PurpleActionArea
 @onready var _area: Area2D = $Area2D
 
@@ -124,9 +131,37 @@ func _green_ability() -> void:
 	if is_on_floor():
 		velocity.y = JUMP_VELOCITY
 
+func _appear_chibis():
+	visible = true
+	_camera.make_current()
+
+func teleport(place: Vector2) -> void:
+	var area_to_move := _teleport_collsion_checks[place] as Area2D
+	if area_to_move.has_overlapping_bodies():
+		return
+
+	_teleport_camera.position = position
+	_teleport_camera.make_current()
+
+	visible = false
+	position += place
+
+	var tween := create_tween()
+	tween.tween_property(_teleport_camera, "position", position, 0.2)
+	tween.finished.connect(_appear_chibis)
 
 func _yellow_ability() -> void:
-	print("yellow ability")
+	if is_on_floor():
+		if Input.is_action_pressed("ui_left"):
+			teleport(Vector2(-128, 0))
+		elif Input.is_action_pressed("ui_right"):
+			teleport(Vector2(128, 0))
+		elif Input.is_action_pressed("ui_up"):
+			teleport(Vector2(0, -128))
+		elif Input.is_action_pressed("ui_down"):
+			teleport(Vector2(0, 128))
+		else:
+			return
 
 
 func _purple_ability() -> void:

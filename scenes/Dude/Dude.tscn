@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://chm67gi5crs17"]
+[gd_scene load_steps=7 format=3 uid="uid://chm67gi5crs17"]
 
 [ext_resource type="Script" path="res://scenes/Dude/Dude.gd" id="1_6nkmb"]
 [ext_resource type="Texture2D" uid="uid://db3s5iecejcda" path="res://assets/Scribble/spritesheet_default.png" id="1_vc6mv"]
@@ -12,6 +12,9 @@ radius = 18.0
 height = 58.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oqiyy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7ft1k"]
+size = Vector2(16, 16)
 
 [node name="Dude" type="CharacterBody2D" groups=["dude"]]
 collision_mask = 2
@@ -44,3 +47,40 @@ collision_mask = 9
 position = Vector2(0, 55)
 scale = Vector2(5, 2.5)
 shape = SubResource("RectangleShape2D_oqiyy")
+
+[node name="TeleportCamera" type="Camera2D" parent="."]
+top_level = true
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="Up" type="Area2D" parent="Node2D"]
+collision_layer = 0
+collision_mask = 2
+
+[node name="Collision" type="CollisionShape2D" parent="Node2D/Up"]
+position = Vector2(0, -128)
+shape = SubResource("RectangleShape2D_7ft1k")
+
+[node name="Down" type="Area2D" parent="Node2D"]
+collision_layer = 0
+collision_mask = 2
+
+[node name="Collision" type="CollisionShape2D" parent="Node2D/Down"]
+position = Vector2(0, 128)
+shape = SubResource("RectangleShape2D_7ft1k")
+
+[node name="Left" type="Area2D" parent="Node2D"]
+collision_layer = 0
+collision_mask = 2
+
+[node name="Collision" type="CollisionShape2D" parent="Node2D/Left"]
+position = Vector2(-128, 0)
+shape = SubResource("RectangleShape2D_7ft1k")
+
+[node name="Right" type="Area2D" parent="Node2D"]
+collision_layer = 0
+collision_mask = 2
+
+[node name="Collision" type="CollisionShape2D" parent="Node2D/Right"]
+position = Vector2(128, 0)
+shape = SubResource("RectangleShape2D_7ft1k")
