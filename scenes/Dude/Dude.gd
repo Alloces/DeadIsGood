@@ -19,11 +19,12 @@ const GROUP = "dude"
 @onready var _camera: Camera2D = $Camera2D
 @onready var _teleport_camera: Camera2D = $TeleportCamera
 @onready var _teleport_collsion_checks := {
-	Vector2(-128, 0): $Node2D/Left,
-	Vector2(128, 0): $Node2D/Right,
-	Vector2(0, -128): $Node2D/Up,
-	Vector2(0, 128): $Node2D/Down,
+	Vector2(-128, 0): $YellowActionArea/Left,
+	Vector2(128, 0): $YellowActionArea/Right,
+	Vector2(0, -128): $YellowActionArea/Up,
+	Vector2(0, 128): $YellowActionArea/Down,
 }
+@onready var _yellow_area: Node2D = $YellowActionArea
 @onready var _purple_area: Area2D = $PurpleActionArea
 @onready var _red_area: Area2D = $RedActionArea
 @onready var _area: Area2D = $Area2D
@@ -51,6 +52,7 @@ const GROUP = "dude"
 		_sprite.set_region_rect(TypeRects[type])
 		_purple_area.set_visible(new_type == Types.Purple)
 		_red_area.set_visible(new_type == Types.Red)
+		_yellow_area.set_visible(new_type == Types.Yellow)
 
 @export var tilemap: TileMap
 @export var block_atlas_coords: Vector2i = Vector2i(4, 7)
@@ -79,6 +81,7 @@ func _ready() -> void:
 	_sprite.set_region_rect(TypeRects[type])
 	_purple_area.set_visible(type == Types.Purple)
 	_red_area.set_visible(type == Types.Red)
+	_yellow_area.set_visible(type == Types.Yellow)
 
 
 func _change_is_player_state() -> void:

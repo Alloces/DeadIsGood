@@ -44,6 +44,7 @@ position = Vector2(0, -1)
 shape = SubResource("CapsuleShape2D_mv6ge")
 
 [node name="PurpleActionArea" type="Area2D" parent="."]
+visible = false
 position = Vector2(55, 64)
 collision_layer = 0
 collision_mask = 9
@@ -55,37 +56,38 @@ shape = SubResource("RectangleShape2D_oqiyy")
 [node name="TeleportCamera" type="Camera2D" parent="."]
 top_level = true
 
-[node name="Node2D" type="Node2D" parent="."]
+[node name="YellowActionArea" type="Node2D" parent="."]
+visible = false
 
-[node name="Up" type="Area2D" parent="Node2D"]
+[node name="Up" type="Area2D" parent="YellowActionArea"]
 collision_layer = 0
 collision_mask = 2
 
-[node name="Collision" type="CollisionShape2D" parent="Node2D/Up"]
+[node name="Collision" type="CollisionShape2D" parent="YellowActionArea/Up"]
 position = Vector2(0, -128)
 shape = SubResource("RectangleShape2D_7ft1k")
 
-[node name="Down" type="Area2D" parent="Node2D"]
+[node name="Down" type="Area2D" parent="YellowActionArea"]
 collision_layer = 0
 collision_mask = 2
 
-[node name="Collision" type="CollisionShape2D" parent="Node2D/Down"]
+[node name="Collision" type="CollisionShape2D" parent="YellowActionArea/Down"]
 position = Vector2(0, 128)
 shape = SubResource("RectangleShape2D_7ft1k")
 
-[node name="Left" type="Area2D" parent="Node2D"]
+[node name="Left" type="Area2D" parent="YellowActionArea"]
 collision_layer = 0
 collision_mask = 2
 
-[node name="Collision" type="CollisionShape2D" parent="Node2D/Left"]
+[node name="Collision" type="CollisionShape2D" parent="YellowActionArea/Left"]
 position = Vector2(-128, 0)
 shape = SubResource("RectangleShape2D_7ft1k")
 
-[node name="Right" type="Area2D" parent="Node2D"]
+[node name="Right" type="Area2D" parent="YellowActionArea"]
 collision_layer = 0
 collision_mask = 2
 
-[node name="Collision" type="CollisionShape2D" parent="Node2D/Right"]
+[node name="Collision" type="CollisionShape2D" parent="YellowActionArea/Right"]
 position = Vector2(128, 0)
 shape = SubResource("RectangleShape2D_7ft1k")
 
