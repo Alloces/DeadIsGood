@@ -5,6 +5,7 @@ var music := preload("res://assets/music/music.mp3")
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	stream = music
+	stream.set_loop(true)
 	volume_db = -20
 	play()
 
