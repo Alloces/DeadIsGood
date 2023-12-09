@@ -76,11 +76,11 @@ func _ready() -> void:
 
 
 func _change_is_player_state() -> void:
-	_camera.enabled = is_player
 	_area.call_deferred("set_monitoring", is_player)
 	_area.call_deferred("set_monitorable", !is_player)
 	
 	if is_player:
+		_camera.make_current()
 		_area.connect("area_entered", _on_area_2d_area_entered)
 	elif _area.is_connected("area_entered", _on_area_2d_area_entered):
 		_area.disconnect("area_entered", _on_area_2d_area_entered)
@@ -157,6 +157,8 @@ func _green_ability() -> void:
 func _appear_chibis():
 	visible = true
 	_camera.make_current()
+	set_physics_process(true)
+	set_process_input(true)
 
 func teleport(place: Vector2) -> void:
 	var area_to_move := _teleport_collsion_checks[place] as Area2D
@@ -166,6 +168,8 @@ func teleport(place: Vector2) -> void:
 	_teleport_camera.position = position
 	_teleport_camera.make_current()
 
+	set_physics_process(false)
+	set_process_input(false)
 	visible = false
 	position += place
 
