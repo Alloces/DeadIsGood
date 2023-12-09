@@ -147,6 +147,7 @@ func _purple_ability() -> void:
 		
 	elif atlas_coords == block_atlas_coords:
 		tilemap.set_cell(0, cell, 0, Vector2i(-1, -1))
+		_created_tiles.erase(cell)
 
 
 func _on_area_2d_area_entered(area: Area2D):
