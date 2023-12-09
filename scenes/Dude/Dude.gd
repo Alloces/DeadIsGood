@@ -49,8 +49,6 @@ const GROUP = "dude"
 @export var block_atlas_coords: Vector2i = Vector2i(4, 7)
 var empty_atlas_coords: Vector2i = Vector2i(-1, -1)
 
-var _red_picked_up_block: bool = false
-
 var TypeRects: Dictionary = {
 	Types.Red: 		Rect2(576, 320, 64, 64),
 	Types.Green: 	Rect2(576, 448, 64, 64),
@@ -131,19 +129,17 @@ func _red_ability() -> void:
 	cell.x += -1 if _sprite.is_flipped_h() else 1
 	
 	var atlas_coords: Vector2i = tilemap.get_cell_atlas_coords(0, cell)
-	if _red_picked_up_block:
+	if _block_for_red.visible:
 		if atlas_coords != empty_atlas_coords || _red_area.has_overlapping_areas():
 			return
 		
 		tilemap.set_cell(0, cell, 0, block_atlas_coords)
-		_red_picked_up_block = false
 		_block_for_red.set_visible(false)
 	else:
 		if atlas_coords != block_atlas_coords:
 			return
 		
 		tilemap.set_cell(0, cell, 0, empty_atlas_coords)
-		_red_picked_up_block = true
 		_block_for_red.set_visible(true)
 
 
