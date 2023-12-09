@@ -47,7 +47,13 @@ const GROUP = "dude"
 
 @export var tilemap: TileMap
 @export var block_atlas_coords: Vector2i = Vector2i(4, 7)
-var empty_atlas_coords: Vector2i = Vector2i(-1, -1)
+const empty_atlas_coords: Vector2i = Vector2i(-1, -1)
+
+var _previous_masked_block = {
+	"is_set": false,
+	"position": empty_atlas_coords,
+	"atlas_coords": empty_atlas_coords,
+}
 
 var TypeRects: Dictionary = {
 	Types.Red: 		Rect2(576, 320, 64, 64),
@@ -89,6 +95,9 @@ func _physics_process(delta: float) -> void:
 		_parse_npc_behavior()
 	
 	move_and_slide()
+	
+	if type == Types.Purple:
+		_purple_tile_mask()
 
 
 func _parse_input() -> void:
@@ -108,6 +117,7 @@ func move(direction: float) -> void:
 		
 		_sprite.flip_h = direction < 0
 		_red_area.position.x = -55 if direction < 0 else 55
+		_purple_area.position.x = _red_area.position.x
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 
@@ -153,23 +163,41 @@ func _yellow_ability() -> void:
 
 
 func _purple_ability() -> void:
-	var cell: Vector2i = tilemap.local_to_map(position)
-	cell.y += 1
-	cell.x += -1 if _sprite.is_flipped_h() else 1
-	
+	var cell: Vector2i = tilemap.local_to_map(_purple_area.global_position)
 	var atlas_coords: Vector2i = tilemap.get_cell_atlas_coords(0, cell)
-	if atlas_coords == empty_atlas_coords:
+	if (tilemap.get_cell_alternative_tile(0, cell) == 1 and atlas_coords == block_atlas_coords) or atlas_coords == empty_atlas_coords:
 		if _purple_area.has_overlapping_areas():
 			return
 		
 		tilemap.set_cell(0, cell, 0, block_atlas_coords)
+		_previous_masked_block.is_set = false
 		_created_tiles.append(cell)
 		if _created_tiles.size() > 3:
 			tilemap.set_cell(0, _created_tiles.pop_front(), 0, empty_atlas_coords)
 		
 	elif atlas_coords == block_atlas_coords:
 		tilemap.set_cell(0, cell, 0, empty_atlas_coords)
+		_previous_masked_block.is_set = false
 		_created_tiles.erase(cell)
+
+
+func _purple_tile_mask() -> void:
+	var cell: Vector2i = tilemap.local_to_map(_purple_area.global_position)
+	var atlas_coords: Vector2i = tilemap.get_cell_atlas_coords(0, cell)
+	if tilemap.get_cell_alternative_tile(0, cell) != 0 and atlas_coords != empty_atlas_coords:
+		return
+	
+	if atlas_coords == empty_atlas_coords:
+		tilemap.set_cell(0, cell, 0, block_atlas_coords, 1)
+	elif atlas_coords == block_atlas_coords:
+		tilemap.set_cell(0, cell, 0, block_atlas_coords, 3)
+	
+	if _previous_masked_block.is_set:
+		tilemap.set_cell(0, _previous_masked_block.position, 0, _previous_masked_block.atlas_coords)
+	
+	_previous_masked_block.is_set = true
+	_previous_masked_block.position = cell
+	_previous_masked_block.atlas_coords = atlas_coords
 
 
 func _on_area_2d_area_entered(area: Area2D):
